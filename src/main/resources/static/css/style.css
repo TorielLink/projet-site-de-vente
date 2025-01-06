@@ -1,0 +1,90 @@
+/* Style global */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ecf0f1;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* En-tête commun */
+header {
+    background-color: #2c3e50;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
+}
+
+/* Liens communs */
+a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Container pour l'accueil */
+.container {
+    padding: 20px;
+    text-align: center;
+}
+
+/* Formulaire centralisé */
+form {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    margin: auto;
+}
+
+/* Champ de formulaire */
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Bouton */
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #3498db;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+/* Centrer les formulaires */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+form h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
