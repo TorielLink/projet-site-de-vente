@@ -3,9 +3,13 @@ package clemclo.projet_site_vente.controllers;
 import clemclo.projet_site_vente.models.ItemEntity;
 import clemclo.projet_site_vente.models.UserEntity;
 import clemclo.projet_site_vente.repository.UserRepository;
+import clemclo.projet_site_vente.services.DBUserDetailsService;
 import clemclo.projet_site_vente.services.ItemService;
 import clemclo.projet_site_vente.services.SaleService;
 import clemclo.projet_site_vente.services.UserService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -52,13 +56,32 @@ public class MainController {
         return "login"; // Page de connexion
     }
 
-
-    // Tableau de bord après la connexion
+    public UserEntity getAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated() && !authentication.getPrincipal().equals("anonymousUser")) {
+            String username = authentication.getName();
+            return userService.getUserByUsername(username);
+        }
+        return null; // No authenticated user
+    }
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
-        List<ItemEntity> items = itemService.searchItems(""); // Affiche tous les objets non vendus
+        UserEntity user = getAuthenticatedUser();
+        if (user == null) {
+            return "redirect:/login";
+        }
+        List<ItemEntity> items = itemService.getAllItems();
+        List<ItemEntity> userItems = itemService.getAllItemsByUser(user);
+        List<ItemEntity> otherItems = itemService.getOtherUsersItems(user);
+
+        System.out.println("--------------------------------------------------------\n\nItems de l'utilisateur\n" + userItems + "\n\n\n--------------------------------------------------------");
+
+        System.out.println("--------------------------------------------------------\n\nItems des autres\n" + otherItems + "\n\n\n--------------------------------------------------------");
+
         model.addAttribute("items", items);
-        return "dashboard"; // Page principale après connexion
+        model.addAttribute("userItems", userItems);
+        model.addAttribute("otherItems", otherItems);
+        return "dashboard";
     }
 
     // Method to add a new item
@@ -72,8 +95,24 @@ public class MainController {
         ItemEntity item = itemService.addItem(description, price, userRepository.getReferenceById(ownerId));
 
         // Optionally, you can add a success message or refresh the items list
-        model.addAttribute("item", item);
+        model.addAttribute("items", itemService.getAllItems());
 
-        return "dashboard";  // Redirect to the dashboard after adding the item
+        return "redirect:/dashboard";
     }
+
+    // Method to mark an item as sold
+    @PostMapping("/items/sell")
+    public String recordSale(@RequestParam("itemId") Long itemId,
+                             Model model) {
+
+        // Save the item to the database using ItemService
+        boolean success = saleService.recordSale(itemId);
+
+        // Optionally, you can add a success message or refresh the items list
+        model.addAttribute("items", itemService.getAllItems());
+
+        return "redirect:/dashboard";
+    }
+
+
 }

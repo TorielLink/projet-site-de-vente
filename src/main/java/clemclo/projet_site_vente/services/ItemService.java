@@ -21,11 +21,24 @@ public class ItemService {
         item.setDescription(description);
         item.setPrice(price);
         item.setOwner(owner);
+        System.out.println(item);
         return itemRepository.save(item);
     }
 
     public List<ItemEntity> searchItems(String keyword) {
         return itemRepository.findByDescriptionContainingAndSoldFalse(keyword);
+    }
+
+    public List<ItemEntity> getAllItems() {
+        return itemRepository.findAll();
+    }
+
+    public List<ItemEntity> getAllItemsByUser(UserEntity user) {
+        return itemRepository.findByOwner(user);
+    }
+
+    public List<ItemEntity> getOtherUsersItems(UserEntity user) {
+        return itemRepository.findByOwnerNot(user);
     }
 
     public void markAsSold(Long itemId) {

@@ -62,5 +62,11 @@ public class ItemEntity {
     public void setOwner(UserEntity owner) {
         this.owner = owner;
     }
+
+    @Override
+    public String toString() {
+        return description + " - " + price + " - " + sold;
+
+    }
 }
 

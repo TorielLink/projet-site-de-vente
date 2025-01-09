@@ -1,26 +1,38 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="fr">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tableau de bord</title>
 </head>
 <body>
 <h1>Bienvenue sur votre tableau de bord</h1>
 <h2>Objets en vente</h2>
 <ul>
-    <li th:each="item : ${items}">
+    <li th:each="item : ${otherItems}">
         <span th:text="${item.description}"></span> -
-        <span th:text="${item.price}"></span> €
-        <form action="/items/sell" method="post" style="display:inline;">
+        <span th:text="${item.price}"></span> euros
+    </li>
+</ul>
+<h2>Mes objets</h2>
+<ul>
+    <li th:each="item : ${userItems}">
+        <span th:text="${item.description}"></span> -
+        <span th:text="${item.price}"></span> euros
+        <span th:if="${item.sold}"> (Vendu)</span>
+        <form th:if="${!item.sold}" action="/items/sell" method="post" style="display:inline;">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
             <input type="hidden" name="itemId" th:value="${item.id}"/>
             <button type="submit">Marquer comme vendu</button>
         </form>
     </li>
 </ul>
 
+
 <h2>Ajouter un objet</h2>
 <form action="/items/add" method="post">
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-    <input type="hidden" name="ownerId" value="1" />
+    <input type="hidden" name="ownerId" value="1"/>
     <label for="description">Description :</label>
     <input type="text" id="description" name="description" required/><br/>
 

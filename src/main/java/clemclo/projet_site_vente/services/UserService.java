@@ -43,6 +43,10 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
+    public UserEntity getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
     public List<UserEntity> getAllUsers() {
         return userRepository.findAll();
     }
