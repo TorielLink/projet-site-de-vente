@@ -38,7 +38,16 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public UserEntity getUserById(Long userId) {
+        return null;
+    }
+
+    public boolean deleteUser(Long ig) {
+        return true;
+    }
+
     public List<UserEntity> getAllUsers() {
+        return null;
     }
 }
 

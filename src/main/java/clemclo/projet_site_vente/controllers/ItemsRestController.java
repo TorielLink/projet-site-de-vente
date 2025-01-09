@@ -1,6 +1,7 @@
 package clemclo.projet_site_vente.controllers;
 
 import clemclo.projet_site_vente.models.ItemEntity;
+import clemclo.projet_site_vente.models.UserEntity;
 import clemclo.projet_site_vente.services.ItemService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,11 +10,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/items")
-public class ItemRestController {
+public class ItemsRestController {
 
     private final ItemService itemService;
 
-    public ItemRestController(ItemService itemService) {
+    public ItemsRestController(ItemService itemService) {
         this.itemService = itemService;
     }
 
@@ -35,7 +36,7 @@ public class ItemRestController {
 
     // Ajouter un nouvel objet
     @PostMapping(consumes = {"application/json"}, produces = {"application/json"})
-    public ResponseEntity<ItemEntity> addItem(@RequestBody ItemEntity item, @RequestParam String ownerUsername) {
+    public ResponseEntity<ItemEntity> addItem(@RequestBody ItemEntity item, @RequestParam UserEntity ownerUsername) {
         ItemEntity createdItem = itemService.addItem(item.getDescription(), item.getPrice(), ownerUsername);
         return ResponseEntity.ok(createdItem);
     }

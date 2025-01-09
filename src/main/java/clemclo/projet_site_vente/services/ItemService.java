@@ -35,6 +35,7 @@ public class ItemService {
     }
 
     public ItemEntity getItemById(Long id) {
+        return null;
     }
 
     public boolean deleteItem(Long id) {
