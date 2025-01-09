@@ -19,6 +19,7 @@ public class UserService {
     }
 
     public UserEntity registerUser(String username, String rawPassword, String city) {
+        System.out.println("------------------------------------------------------------------Sauvegarde");
         if (userRepository.findByUsername(username) != null) {
             throw new RuntimeException("Login déjà utilisé !");
         }
