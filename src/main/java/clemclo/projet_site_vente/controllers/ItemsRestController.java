@@ -38,7 +38,7 @@ public class ItemsRestController {
     }
 
     // Ajouter un nouvel objet
-    @PostMapping(consumes = {"application/json"}, produces = {"application/json"})
+    @PostMapping(name = "/item/add", consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<ItemEntity> addItem(@RequestBody ItemEntity item, @RequestParam Long ownerID) {
         UserEntity owner = userService.getUserById(ownerID);
         if (owner == null)

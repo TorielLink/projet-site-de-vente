@@ -19,7 +19,8 @@
 
 <h2>Ajouter un objet</h2>
 <form action="/items/add" method="post">
-    <input type="hidden" name="ownerId" value="1" /> <!-- Remplacez avec l'ID utilisateur connecté -->
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+    <input type="hidden" name="ownerId" value="1" />
     <label for="description">Description :</label>
     <input type="text" id="description" name="description" required/><br/>
 

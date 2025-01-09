@@ -9,6 +9,8 @@
 <body>
 <h1>Connexion</h1>
 <form action="/login" method="post">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
     <label for="login">Identifiant : </label>
     <input type="text" id="login" name="username" required/><br/>
 

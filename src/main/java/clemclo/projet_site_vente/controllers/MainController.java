@@ -52,11 +52,28 @@ public class MainController {
         return "login"; // Page de connexion
     }
 
+
     // Tableau de bord après la connexion
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
         List<ItemEntity> items = itemService.searchItems(""); // Affiche tous les objets non vendus
         model.addAttribute("items", items);
         return "dashboard"; // Page principale après connexion
+    }
+
+    // Method to add a new item
+    @PostMapping("/items/add")
+    public String addItem(@RequestParam("description") String description,
+                          @RequestParam("price") double price,
+                          @RequestParam("ownerId") Long ownerId,
+                          Model model) {
+
+        // Save the item to the database using ItemService
+        ItemEntity item = itemService.addItem(description, price, userRepository.getReferenceById(ownerId));
+
+        // Optionally, you can add a success message or refresh the items list
+        model.addAttribute("item", item);
+
+        return "dashboard";  // Redirect to the dashboard after adding the item
     }
 }
