@@ -38,16 +38,20 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public UserEntity getUserById(Long userId) {
-        return null;
-    }
-
-    public boolean deleteUser(Long ig) {
-        return true;
+    public UserEntity getUserById(Long id) {
+        return userRepository.findById(id).orElse(null);
     }
 
     public List<UserEntity> getAllUsers() {
-        return null;
+        return userRepository.findAll();
+    }
+
+    public boolean deleteUser(Long id) {
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }
 

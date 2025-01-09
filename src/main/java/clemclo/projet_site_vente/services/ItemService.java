@@ -35,10 +35,14 @@ public class ItemService {
     }
 
     public ItemEntity getItemById(Long id) {
-        return null;
+        return itemRepository.findById(id).orElse(null);
     }
 
     public boolean deleteItem(Long id) {
+        if (itemRepository.existsById(id)) {
+            itemRepository.deleteById(id);
+            return true;
+        }
         return false;
     }
 }

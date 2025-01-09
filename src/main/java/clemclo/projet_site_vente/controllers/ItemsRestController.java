@@ -3,6 +3,7 @@ package clemclo.projet_site_vente.controllers;
 import clemclo.projet_site_vente.models.ItemEntity;
 import clemclo.projet_site_vente.models.UserEntity;
 import clemclo.projet_site_vente.services.ItemService;
+import clemclo.projet_site_vente.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,9 +14,11 @@ import java.util.List;
 public class ItemsRestController {
 
     private final ItemService itemService;
+    private final UserService userService;
 
-    public ItemsRestController(ItemService itemService) {
+    public ItemsRestController(ItemService itemService, UserService userService) {
         this.itemService = itemService;
+        this.userService = userService;
     }
 
     // Obtenir tous les objets (items)
@@ -36,8 +39,11 @@ public class ItemsRestController {
 
     // Ajouter un nouvel objet
     @PostMapping(consumes = {"application/json"}, produces = {"application/json"})
-    public ResponseEntity<ItemEntity> addItem(@RequestBody ItemEntity item, @RequestParam UserEntity ownerUsername) {
-        ItemEntity createdItem = itemService.addItem(item.getDescription(), item.getPrice(), ownerUsername);
+    public ResponseEntity<ItemEntity> addItem(@RequestBody ItemEntity item, @RequestParam Long ownerID) {
+        UserEntity owner = userService.getUserById(ownerID);
+        if (owner == null)
+            return ResponseEntity.badRequest().build(); // Retourne HTTP 400 si l'utilisateur n'existe pas
+        ItemEntity createdItem = itemService.addItem(item.getDescription(), item.getPrice(), owner);
         return ResponseEntity.ok(createdItem);
     }
 
