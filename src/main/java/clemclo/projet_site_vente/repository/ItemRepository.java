@@ -9,7 +9,7 @@ import java.util.List;
 public interface ItemRepository extends JpaRepository<ItemEntity, Long> {
     List<ItemEntity> findByDescriptionContainingAndSoldFalse(String keyword);
 
-    List<ItemEntity> findByOwner(UserEntity user);
+    List<ItemEntity> findByOwnerOrderBySold(UserEntity user);
 
     List<ItemEntity> findByOwnerNot(UserEntity user);
 }

@@ -83,9 +83,6 @@ public class MainController {
         model.addAttribute("searchResults", searchResults);
         if (user.getRole().equals("ADMIN"))
             model.addAttribute("revenue", saleService.getTotalRevenue());
-        System.out.println("\n\n\n--------------------------------------------------");
-        System.out.println(model.getAttribute("revenue"));
-        System.out.println("--------------------------------------------------\n\n\n");
         return "dashboard";
     }
 

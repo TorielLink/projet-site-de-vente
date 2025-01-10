@@ -34,7 +34,7 @@ public class ItemService {
     }
 
     public List<ItemEntity> getAllItemsByUser(UserEntity user) {
-        return itemRepository.findByOwner(user);
+        return itemRepository.findByOwnerOrderBySold(user);
     }
 
     public List<ItemEntity> getOtherUsersItems(UserEntity user) {
