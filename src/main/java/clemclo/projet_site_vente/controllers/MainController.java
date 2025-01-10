@@ -3,12 +3,10 @@ package clemclo.projet_site_vente.controllers;
 import clemclo.projet_site_vente.models.ItemEntity;
 import clemclo.projet_site_vente.models.UserEntity;
 import clemclo.projet_site_vente.repository.UserRepository;
-import clemclo.projet_site_vente.services.DBUserDetailsService;
 import clemclo.projet_site_vente.services.ItemService;
 import clemclo.projet_site_vente.services.SaleService;
 import clemclo.projet_site_vente.services.UserService;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -64,6 +62,7 @@ public class MainController {
         }
         return null; // No authenticated user
     }
+
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
         UserEntity user = getAuthenticatedUser();
@@ -72,15 +71,12 @@ public class MainController {
         }
         List<ItemEntity> items = itemService.getAllItems();
         List<ItemEntity> userItems = itemService.getAllItemsByUser(user);
-        List<ItemEntity> otherItems = itemService.getOtherUsersItems(user);
-
-        System.out.println("--------------------------------------------------------\n\nItems de l'utilisateur\n" + userItems + "\n\n\n--------------------------------------------------------");
-
-        System.out.println("--------------------------------------------------------\n\nItems des autres\n" + otherItems + "\n\n\n--------------------------------------------------------");
 
         model.addAttribute("items", items);
         model.addAttribute("userItems", userItems);
-        model.addAttribute("otherItems", otherItems);
+        model.addAttribute("userId", user.getId());
+        model.addAttribute("userRole", user.getRole());
+//        model.addAttribute("userProfit", )
         return "dashboard";
     }
 
@@ -96,6 +92,7 @@ public class MainController {
 
         // Optionally, you can add a success message or refresh the items list
         model.addAttribute("items", itemService.getAllItems());
+
 
         return "redirect:/dashboard";
     }
@@ -114,5 +111,27 @@ public class MainController {
         return "redirect:/dashboard";
     }
 
+    @GetMapping("/protected/admin/revenue")
+    public String revenue(Model model) {
+        model.addAttribute("revenue", saleService.getTotalRevenue());
+
+        return "revenue";
+    }
+
+    @GetMapping("/home")
+    public String home(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
+        UserEntity user = getAuthenticatedUser();
+
+        List<ItemEntity> searchResults = (keyword != null && !keyword.isEmpty())
+                ? itemService.searchItems(keyword)
+                : null;
+
+        List<ItemEntity> otherItems = itemService.getOtherUsersItems(user);
+
+        model.addAttribute("searchResults", searchResults);
+        model.addAttribute("otherItems", otherItems);
+
+        return "home";
+    }
 
 }

@@ -32,12 +32,11 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((authz) -> authz
                         // Pages accessibles à tous (inscription, accueil, etc.)
-                        .requestMatchers("/", "/home", "/login", "/register", "/css/**", "/js/**")
+                        .requestMatchers("/", "/login", "/register", "/css/**", "/js/**")
                         .permitAll()
 
                         // Pages réservées aux rôles spécifiques
-                        .requestMatchers("/protege/admin/**").hasRole("ADMIN")  // Accès réservé aux ADMIN
-                        .requestMatchers("/protege/user/**").hasAnyRole("USER", "ADMIN")   // Accès réservé aux USER
+                        .requestMatchers("/protected/admin/**").hasRole("ADMIN")  // Accès réservé aux ADMIN
                         .requestMatchers("/dashboard", "/items/**").hasAnyRole("USER", "ADMIN") // Accessible aux utilisateurs connectés
 
                         // Toute autre requête nécessite une authentification
@@ -46,14 +45,17 @@ public class SecurityConfig {
                 // Configuration de la page de connexion
                 .formLogin(form -> form
                         .loginPage("/login")  // URL de la page de connexion personnalisée
-                        .defaultSuccessUrl("/dashboard", true)  // Redirection après connexion réussie
+                        .defaultSuccessUrl("/home", true)  // Redirection après connexion réussie
                         .permitAll()
                 )
                 // Configuration de la déconnexion
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/home") // Redirection après déconnexion
+                        .logoutSuccessUrl("/") // Redirection après déconnexion
                         .permitAll()
+                )
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .accessDeniedPage("/home") // Redirect to this page if the user is unauthorized
                 )
                 .httpBasic(withDefaults()); // Authentification HTTP Basic (optionnelle)
 

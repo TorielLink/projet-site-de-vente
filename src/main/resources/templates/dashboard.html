@@ -6,14 +6,9 @@
     <title>Tableau de bord</title>
 </head>
 <body>
+
+<a href="/home">Accueil</a>
 <h1>Bienvenue sur votre tableau de bord</h1>
-<h2>Objets en vente</h2>
-<ul>
-    <li th:each="item : ${otherItems}">
-        <span th:text="${item.description}"></span> -
-        <span th:text="${item.price}"></span> euros
-    </li>
-</ul>
 <h2>Mes objets</h2>
 <ul>
     <li th:each="item : ${userItems}">
@@ -32,7 +27,7 @@
 <h2>Ajouter un objet</h2>
 <form action="/items/add" method="post">
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-    <input type="hidden" name="ownerId" value="1"/>
+    <input type="hidden" th:name="ownerId" th:value="${userId}"/>
     <label for="description">Description :</label>
     <input type="text" id="description" name="description" required/><br/>
 
@@ -41,5 +36,8 @@
 
     <button type="submit">Ajouter</button>
 </form>
+
+
+<a th:if="${userRole.equals('ADMIN')}" href="/protected/admin/revenue">Voir le chiffre d'affaires</a>
 </body>
 </html>

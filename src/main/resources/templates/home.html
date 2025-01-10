@@ -3,13 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome Home</title>
+    <title>Accueil</title>
 </head>
 <body>
+<form th:action="@{/home}" method="get">
+    <input type="text" name="keyword" placeholder="Rechercher un objet"/>
+    <button type="submit">Rechercher</button>
+</form>
 
-<h2>Welcome, You are logged in!</h2>
+<ul>
+    <li th:each="item : ${searchResults}" th:if="${!item.sold}">
+        <div>
+            <span th:text="${item.description}"></span> -
+            <span th:text="${item.price}"></span> euros
+        </div>
+    </li>
+</ul>
+<h2>Objets en vente</h2>
+<ul>
+    <li th:each="item : ${otherItems}" th:if="${!item.sold}">
+        <div>
+            <span th:text="${item.description}"></span> -
+            <span th:text="${item.price}"></span> euros
+        </div>
+    </li>
+</ul>
 
-<!-- Lien pour se déconnecter -->
+<a href="/dashboard">Tableau de bord</a>
 <a href="/logout">Logout</a>
 
 </body>
