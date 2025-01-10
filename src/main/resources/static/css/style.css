@@ -1,12 +1,14 @@
 /* style.css */
 body {
     font-family: Arial, sans-serif;
-    background-color: #ffe5e5;
+    background: radial-gradient(circle, #ffe5e5 0%, #ffe5e5 0%, #f5a3a3 40%, #b33d3d 70%, #800000 100%);
     color: #800000;
     margin: 0;
     padding: 0;
     text-align: center;
+    height: 100vh;
 }
+
 
 header {
     margin: 30px 0;
