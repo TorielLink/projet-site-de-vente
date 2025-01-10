@@ -62,8 +62,8 @@
 
                             <!-- Price and status/button on the right -->
                             <div class="d-flex align-items-center">
-                                <span th:text="${item.price}" class="text-muted me-1"></span>
-                                <span class="me-3">euros</span>
+                                <span th:text="${#numbers.formatCurrency(item.price)}" class="text-muted me-1"></span>
+                                <!--TODO <span class="me-3">euros</span>-->
                                 <span th:if="${item.sold}" class="text-success me-2">(Vendu)</span>
 
                                 <!-- Mark as sold button on the right -->
@@ -105,7 +105,7 @@
                     <li th:each="item : ${searchResults}" th:if="${!item.sold}">
                         <div>
                             <span th:text="${item.description}"></span> -
-                            <span th:text="${item.price}"></span> euros
+                            <span th:text="${#numbers.formatCurrency(item.price)}"></span> <!--TODO euros-->
                         </div>
                     </li>
                 </ul>
@@ -117,7 +117,8 @@
             <div th:if="${userRole.equals('ADMIN')}" id="revenue"
                  class="mt-4 mb-4 p-4 border rounded shadow-sm bg-gradient text-center">
                 <h2 class="text-muted">Chiffres d'affaires :</h2>
-                <span th:text="${revenue}" class="display-4 fw-bold text-danger"></span>
+                <!--TODO <span th:text="${#numbers.formatDecimal(revenue, 1, 'DEFAULT', 2, 'DEFAULT')}" class="display-4 fw-bold text-danger"></span>-->
+                <span th:text="${#numbers.formatCurrency(revenue)}" class="display-4 fw-bold text-danger"></span>
                 <span class="fs-5">euros</span>
             </div>
 
