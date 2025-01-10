@@ -35,7 +35,7 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests((authz) -> authz
                         // Pages accessibles à tous (inscription, accueil, etc.)
-                        .requestMatchers("/", "/login", "/register", "/css/**", "/js/**")
+                        .requestMatchers("/", "/login", "/register", "/images/**","/css/**", "/js/**")
                         .permitAll()
 
                         // Pages réservées aux rôles spécifiques

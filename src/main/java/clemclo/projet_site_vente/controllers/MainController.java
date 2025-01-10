@@ -76,8 +76,26 @@ public class MainController {
                 ? itemService.searchItems(keyword)
                 : null;
 
-        model.addAttribute("userId", user.getId());
-        model.addAttribute("userRole", user.getRole());
+        if (searchResults != null) {
+            searchResults.sort((item1, item2) -> {
+                boolean isOwnedByUser1 = item1.getOwner().getId().equals(user.getId());
+                boolean isOwnedByUser2 = item2.getOwner().getId().equals(user.getId());
+
+                if (isOwnedByUser1 != isOwnedByUser2) {
+                    return isOwnedByUser1 ? -1 : 1;
+                }
+
+                boolean isSold1 = item1.isSold();
+                boolean isSold2 = item2.isSold();
+
+                if (isSold1 != isSold2) {
+                    return isSold1 ? 1 : -1;
+                }
+                return 0;
+            });
+        }
+
+        model.addAttribute("user", user);
         model.addAttribute("userItems", userItems);
         model.addAttribute("otherItems", otherItems);
         model.addAttribute("searchResults", searchResults);
