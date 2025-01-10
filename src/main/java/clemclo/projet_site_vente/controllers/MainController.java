@@ -64,19 +64,28 @@ public class MainController {
     }
 
     @GetMapping("/dashboard")
-    public String dashboard(Model model) {
+    public String dashboard(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
         UserEntity user = getAuthenticatedUser();
         if (user == null) {
             return "redirect:/login";
         }
-        List<ItemEntity> items = itemService.getAllItems();
+        List<ItemEntity> otherItems = itemService.getOtherUsersItems(user);
         List<ItemEntity> userItems = itemService.getAllItemsByUser(user);
 
-        model.addAttribute("items", items);
-        model.addAttribute("userItems", userItems);
+        List<ItemEntity> searchResults = (keyword != null && !keyword.isEmpty())
+                ? itemService.searchItems(keyword)
+                : null;
+
         model.addAttribute("userId", user.getId());
         model.addAttribute("userRole", user.getRole());
-//        model.addAttribute("userProfit", )
+        model.addAttribute("userItems", userItems);
+        model.addAttribute("otherItems", otherItems);
+        model.addAttribute("searchResults", searchResults);
+        if (user.getRole().equals("ADMIN"))
+            model.addAttribute("revenue", saleService.getTotalRevenue());
+        System.out.println("\n\n\n--------------------------------------------------");
+        System.out.println(model.getAttribute("revenue"));
+        System.out.println("--------------------------------------------------\n\n\n");
         return "dashboard";
     }
 
@@ -117,21 +126,4 @@ public class MainController {
 
         return "revenue";
     }
-
-    @GetMapping("/home")
-    public String home(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
-        UserEntity user = getAuthenticatedUser();
-
-        List<ItemEntity> searchResults = (keyword != null && !keyword.isEmpty())
-                ? itemService.searchItems(keyword)
-                : null;
-
-        List<ItemEntity> otherItems = itemService.getOtherUsersItems(user);
-
-        model.addAttribute("searchResults", searchResults);
-        model.addAttribute("otherItems", otherItems);
-
-        return "home";
-    }
-
 }

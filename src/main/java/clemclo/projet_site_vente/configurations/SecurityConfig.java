@@ -30,6 +30,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .requiresChannel(channel -> channel
+                        .anyRequest().requiresSecure())
+
                 .authorizeHttpRequests((authz) -> authz
                         // Pages accessibles à tous (inscription, accueil, etc.)
                         .requestMatchers("/", "/login", "/register", "/css/**", "/js/**")
@@ -45,7 +48,7 @@ public class SecurityConfig {
                 // Configuration de la page de connexion
                 .formLogin(form -> form
                         .loginPage("/login")  // URL de la page de connexion personnalisée
-                        .defaultSuccessUrl("/home", true)  // Redirection après connexion réussie
+                        .defaultSuccessUrl("/dashboard", true)  // Redirection après connexion réussie
                         .permitAll()
                 )
                 // Configuration de la déconnexion
@@ -55,9 +58,13 @@ public class SecurityConfig {
                         .permitAll()
                 )
                 .exceptionHandling(exceptionHandling -> exceptionHandling
-                        .accessDeniedPage("/home") // Redirect to this page if the user is unauthorized
+                        .accessDeniedPage("/dashboard") // Redirect to this page if the user is unauthorized
                 )
-                .httpBasic(withDefaults()); // Authentification HTTP Basic (optionnelle)
+                .httpBasic(withDefaults())
+                .headers(headers -> headers
+                        .httpStrictTransportSecurity()
+                        .includeSubDomains(true)
+                        .maxAgeInSeconds(31536000));
 
         return http.build();
     }
