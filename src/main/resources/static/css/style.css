@@ -1,35 +1,32 @@
-/* Corps global */
+/* style.css */
 body {
     font-family: Arial, sans-serif;
-    background-color: #ffe5e5; /* Rouge clair */
-    color: #800000; /* Rouge foncé */
+    background-color: #ffe5e5;
+    color: #800000;
     margin: 0;
     padding: 0;
     text-align: center;
 }
 
-/* En-tête */
 header {
     margin: 30px 0;
 }
 
 header h1 {
-    color: #b30000; /* Rouge vif */
+    color: #b30000;
     font-size: 2.5rem;
     font-weight: bold;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2); /* Légère ombre */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }
 
-/* Navigation */
 nav {
     margin-top: 20px;
 }
 
-/* Boutons de navigation */
 .link-button {
     display: inline-block;
     text-decoration: none;
-    background-color: #d00000; /* Rouge vif */
+    background-color: #d00000;
     color: white;
     padding: 10px 20px;
     margin: 0 10px;
@@ -39,12 +36,11 @@ nav {
 }
 
 .link-button:hover {
-    background-color: #b30000; /* Rouge foncé */
-    box-shadow: 0 0 10px rgba(179, 0, 0, 0.5); /* Lumière rouge */
-    transform: scale(1.1); /* Agrandissement au survol */
+    background-color: #b30000;
+    box-shadow: 0 0 10px rgba(179, 0, 0, 0.5);
+    transform: scale(1.1);
 }
 
-/* Bouton avec contour */
 .link-button.link-outline {
     background-color: transparent;
     border: 2px solid #d00000;
@@ -52,14 +48,13 @@ nav {
 }
 
 .link-button.link-outline:hover {
-    background-color: #fff5f5; /* Rouge clair */
+    background-color: #fff5f5;
     color: #b30000;
     border-color: #b30000;
     transform: scale(1.1);
     box-shadow: 0 0 10px rgba(179, 0, 0, 0.5);
 }
 
-/* Responsivité */
 @media (max-width: 768px) {
     header h1 {
         font-size: 2rem;

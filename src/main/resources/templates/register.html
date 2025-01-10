@@ -18,26 +18,25 @@
                   class="p-4 border border-danger rounded shadow-sm bg-light">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
-                <!-- Identifiant -->
                 <div class="mb-3">
                     <label for="login" class="form-label text-danger">Identifiant :</label>
                     <input type="text" id="login" th:field="*{username}" class="form-control" required>
                 </div>
 
-                <!-- Mot de passe -->
                 <div class="mb-3">
                     <label for="password" class="form-label text-danger">Mot de passe :</label>
                     <input type="password" id="password" th:field="*{password}" class="form-control" required>
                 </div>
 
-                <!-- Ville -->
                 <div class="mb-3">
                     <label for="city" class="form-label text-danger">Ville :</label>
                     <input type="text" id="city" th:field="*{city}" class="form-control" required>
                 </div>
 
-                <!-- Bouton -->
                 <button type="submit" class="btn btn-danger w-100">S'inscrire</button>
+                <button type="button" class="btn btn-danger w-100 mt-3" onclick="window.location.href='/login'">
+                    Se connecter
+                </button>
             </form>
         </div>
     </div>

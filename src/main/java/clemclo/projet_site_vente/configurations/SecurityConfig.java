@@ -30,12 +30,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+
                 .requiresChannel(channel -> channel
                         .anyRequest().requiresSecure())
 
                 .authorizeHttpRequests((authz) -> authz
                         // Pages accessibles à tous (inscription, accueil, etc.)
-                        .requestMatchers("/", "/login", "/register", "/images/**","/css/**", "/js/**")
+                        .requestMatchers("/", "/login", "/register", "/images/**", "/css/**", "/js/**")
                         .permitAll()
 
                         // Pages réservées aux rôles spécifiques
@@ -49,6 +50,7 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/login")  // URL de la page de connexion personnalisée
                         .defaultSuccessUrl("/dashboard", true)  // Redirection après connexion réussie
+                        .failureUrl("/login?error=true") // Redirect to login page with error message
                         .permitAll()
                 )
                 // Configuration de la déconnexion
@@ -64,7 +66,9 @@ public class SecurityConfig {
                 .headers(headers -> headers
                         .httpStrictTransportSecurity()
                         .includeSubDomains(true)
-                        .maxAgeInSeconds(31536000));
+                        .maxAgeInSeconds(31536000))
+
+                .sessionManagement().sessionFixation().migrateSession();
 
         return http.build();
     }
@@ -80,6 +84,7 @@ public class SecurityConfig {
                 .build();
     }
 
+    // TODO : potentiellement la source du warning avec les deux trucs
     @Bean
     public UserDetailsService userDetailsService() {
         // Configuration en mémoire pour les utilisateurs de test

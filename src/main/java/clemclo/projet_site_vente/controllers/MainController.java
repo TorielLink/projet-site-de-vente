@@ -134,11 +134,4 @@ public class MainController {
 
         return "redirect:/dashboard";
     }
-
-    @GetMapping("/protected/admin/revenue")
-    public String revenue(Model model) {
-        model.addAttribute("revenue", saleService.getTotalRevenue());
-
-        return "revenue";
-    }
 }
