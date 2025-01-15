@@ -12,4 +12,8 @@ public interface ItemRepository extends JpaRepository<ItemEntity, Long> {
     List<ItemEntity> findByOwnerOrderBySold(UserEntity user);
 
     List<ItemEntity> findByOwnerNot(UserEntity user);
+
+    List<ItemEntity> findByOwnerAndSoldTrueOrderByPriceDesc(UserEntity user);
+
+    List<ItemEntity> findByOwnerAndSoldFalseOrderByPriceDesc(UserEntity user);
 }

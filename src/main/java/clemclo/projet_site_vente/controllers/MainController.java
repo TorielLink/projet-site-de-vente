@@ -70,7 +70,8 @@ public class MainController {
             return "redirect:/login";
         }
         List<ItemEntity> otherItems = itemService.getOtherUsersItems(user);
-        List<ItemEntity> userItems = itemService.getAllItemsByUser(user);
+        List<ItemEntity> notSoldItems = itemService.getNotSoldItems(user);
+        List<ItemEntity> soldItems = itemService.getSoldItems(user);
 
         List<ItemEntity> searchResults = (keyword != null && !keyword.isEmpty())
                 ? itemService.searchItems(keyword)
@@ -96,7 +97,8 @@ public class MainController {
         }
 
         model.addAttribute("user", user);
-        model.addAttribute("userItems", userItems);
+        model.addAttribute("notSoldItems", notSoldItems);
+        model.addAttribute("soldItems", soldItems);
         model.addAttribute("otherItems", otherItems);
         model.addAttribute("searchResults", searchResults);
         if (user.getRole().equals("ADMIN"))

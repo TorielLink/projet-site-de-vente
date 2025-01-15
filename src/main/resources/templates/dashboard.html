@@ -54,7 +54,7 @@
             <div id="my-items" class="mb-4">
                 <h2 class="text-danger">Mes objets</h2>
                 <ul class="list-unstyled">
-                    <li th:each="item : ${userItems}"
+                    <li th:each="item : ${notSoldItems}"
                         class="mb-3">
                         <div class="d-flex justify-content-between align-items-center p-3 border rounded shadow-sm bg-light">
                             <div class="d-flex flex-grow-1 overflow-hidden" th:attr="title=${item.description}"
@@ -69,6 +69,24 @@
                                     <input type="hidden" name="itemId" th:value="${item.id}"/>
                                     <button type="submit" class="btn btn-danger btn-sm">Marquer comme vendu</button>
                                 </form>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div id="sold-items" class="mb-4">
+                <h2 class="text-danger">Mes ventes</h2>
+                <ul class="list-unstyled">
+                    <li th:each="item : ${soldItems}"
+                        class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center p-3 border rounded shadow-sm bg-light">
+                            <div class="d-flex flex-grow-1 overflow-hidden" th:attr="title=${item.description}"
+                                 data-bs-toggle="tooltip">
+                                <span th:text="${item.description}" class="fw-bold description-text"></span>
+                            </div>
+                            <div class="d-flex align-items-center flex-shrink-0">
+                                <span th:text="${#numbers.formatCurrency(item.price)}" class="text-muted me-1"></span>
+                                <span th:if="${item.sold}" class="text-success me-2">(Vendu)</span>
                             </div>
                         </div>
                     </li>

@@ -51,6 +51,14 @@ public class ItemService {
         return itemRepository.findById(id).orElse(null);
     }
 
+    public List<ItemEntity> getSoldItems(UserEntity user) {
+        return itemRepository.findByOwnerAndSoldTrueOrderByPriceDesc(user);
+    }
+
+    public List<ItemEntity> getNotSoldItems(UserEntity user) {
+        return itemRepository.findByOwnerAndSoldFalseOrderByPriceDesc(user);
+    }
+
     public boolean deleteItem(Long id) {
         if (itemRepository.existsById(id)) {
             itemRepository.deleteById(id);
