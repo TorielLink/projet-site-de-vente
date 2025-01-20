@@ -6,6 +6,8 @@ import clemclo.projet_site_vente.repository.UserRepository;
 import clemclo.projet_site_vente.services.ItemService;
 import clemclo.projet_site_vente.services.SaleService;
 import clemclo.projet_site_vente.services.UserService;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -43,6 +45,16 @@ public class MainController {
 
     @PostMapping("/register")
     public String registerUser(@ModelAttribute UserEntity user, Model model) {
+        // Vérifier si un des champs est vide
+        if (user.getUsername() == null || user.getUsername().isEmpty() ||
+                user.getPassword() == null || user.getPassword().isEmpty() ||
+                user.getCity() == null || user.getCity().isEmpty()) {
+            // Ajouter un message d'erreur et rediriger vers une page d'erreur
+            model.addAttribute("errorMessage", "Tous les champs sont obligatoires !");
+            return "error"; // Retourne la vue "error"
+        }
+
+        // Si les champs sont valides, enregistre l'utilisateur
         userService.registerUser(user.getUsername(), user.getPassword(), user.getCity());
         model.addAttribute("successMessage", "Utilisateur enregistré avec succès !");
         return "register"; // Retourne la vue "register" avec un message de succès
@@ -98,8 +110,8 @@ public class MainController {
 
         model.addAttribute("user", user);
         model.addAttribute("notSoldItems", notSoldItems);
-        model.addAttribute("soldItems", soldItems);
         model.addAttribute("otherItems", otherItems);
+        model.addAttribute("soldItems", soldItems);
         model.addAttribute("searchResults", searchResults);
         if (user.getRole().equals("ADMIN"))
             model.addAttribute("revenue", saleService.getTotalRevenue());
