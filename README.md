@@ -1,14 +1,18 @@
 # Application de vente d'objets entre particuliers
 
----
+![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![Thymeleaf](https://img.shields.io/badge/Thymeleaf-%23005C0F.svg?style=for-the-badge&logo=Thymeleaf&logoColor=white)
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+
 
 ## Description du projet
 
 Dans le cadre de la ressource **“Programmation avancée”**, nous avons conçu et développé une application web innovante dédiée à la vente d’objets entre particuliers. 
 
 L’objectif principal était de créer une plateforme simple d’utilisation, fonctionnelle et sécurisée, capable d’offrir une expérience fluide et intuitive aux utilisateurs.
-
----
 
 ## Fonctionnalités principales
 
@@ -33,15 +37,12 @@ L’objectif principal était de créer une plateforme simple d’utilisation, f
    - Chiffrement des échanges HTTP.
    - Architecture modulaire et évolutive.
 
----
-
 ## Architecture technique
 
 - **Framework utilisé :** Spring (Spring Boot), garantissant une base robuste pour le développement web.
 - **Base de données :** MariaDB, permettant une gestion efficace et fiable des données.
 - **Tests automatisés :** Réalisés avec **Mockito**, ces tests valident chaque fonctionnalité critique et assurent la robustesse du code.
 
----
 
 ## Configuration requise
 
@@ -59,7 +60,6 @@ L’objectif principal était de créer une plateforme simple d’utilisation, f
    - Maven pour la gestion des dépendances et le build du projet.
    - Un serveur MariaDB fonctionnel.
 
----
 
 ## Sécurité et tests
 
@@ -71,7 +71,6 @@ L’objectif principal était de créer une plateforme simple d’utilisation, f
   - Les tests unitaires et d'intégration ont été développés avec **Mockito** pour garantir une couverture de code optimale.
   - Chaque fonctionnalité critique a été testée pour respecter les spécifications et prévenir les régressions.
 
----
 
 ## Avantages et perspectives
 
