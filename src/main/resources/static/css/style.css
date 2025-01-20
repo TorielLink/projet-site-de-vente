@@ -1,0 +1,76 @@
+/* style.css */
+body {
+    font-family: Arial, sans-serif;
+    background: radial-gradient(circle, #ffe5e5 0%, #ffe5e5 0%, #f5a3a3 40%, #b33d3d 70%, #800000 100%);
+    color: #800000;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    height: 100vh;
+}
+
+
+header {
+    margin: 30px 0;
+}
+
+header h1 {
+    color: #b30000;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+nav {
+    margin-top: 20px;
+}
+
+.link-button {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #d00000;
+    color: white;
+    padding: 10px 20px;
+    margin: 0 10px;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.link-button:hover {
+    background-color: #b30000;
+    box-shadow: 0 0 10px rgba(179, 0, 0, 0.5);
+    transform: scale(1.1);
+}
+
+.link-button.link-outline {
+    background-color: transparent;
+    border: 2px solid #d00000;
+    color: #d00000;
+}
+
+.link-button.link-outline:hover {
+    background-color: #fff5f5;
+    color: #b30000;
+    border-color: #b30000;
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(179, 0, 0, 0.5);
+}
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+
+    .link-button {
+        font-size: 1rem;
+        padding: 8px 15px;
+        margin: 5px 0;
+    }
+
+    nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
