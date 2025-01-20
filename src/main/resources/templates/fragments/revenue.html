@@ -1,0 +1,5 @@
+<div th:fragment="revenue" th:if="${user.getRole().equals('ADMIN')}" id="revenue"
+     class="mt-4 mb-4 p-4 border rounded shadow-sm bg-gradient text-center">
+    <h2 class="text-muted">Chiffres d'affaires :</h2>
+    <span th:text="${#numbers.formatCurrency(revenue)}" class="display-4 fw-bold text-danger"></span>
+</div>

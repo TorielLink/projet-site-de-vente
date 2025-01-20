@@ -6,6 +6,8 @@ import clemclo.projet_site_vente.repository.UserRepository;
 import clemclo.projet_site_vente.services.ItemService;
 import clemclo.projet_site_vente.services.SaleService;
 import clemclo.projet_site_vente.services.UserService;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -43,6 +45,16 @@ public class MainController {
 
     @PostMapping("/register")
     public String registerUser(@ModelAttribute UserEntity user, Model model) {
+        // Vérifier si un des champs est vide
+        if (user.getUsername() == null || user.getUsername().isEmpty() ||
+                user.getPassword() == null || user.getPassword().isEmpty() ||
+                user.getCity() == null || user.getCity().isEmpty()) {
+            // Ajouter un message d'erreur et rediriger vers une page d'erreur
+            model.addAttribute("errorMessage", "Tous les champs sont obligatoires !");
+            return "error"; // Retourne la vue "error"
+        }
+
+        // Si les champs sont valides, enregistre l'utilisateur
         userService.registerUser(user.getUsername(), user.getPassword(), user.getCity());
         model.addAttribute("successMessage", "Utilisateur enregistré avec succès !");
         return "register"; // Retourne la vue "register" avec un message de succès
@@ -64,19 +76,45 @@ public class MainController {
     }
 
     @GetMapping("/dashboard")
-    public String dashboard(Model model) {
+    public String dashboard(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
         UserEntity user = getAuthenticatedUser();
         if (user == null) {
             return "redirect:/login";
         }
-        List<ItemEntity> items = itemService.getAllItems();
-        List<ItemEntity> userItems = itemService.getAllItemsByUser(user);
+        List<ItemEntity> otherItems = itemService.getOtherUsersItems(user);
+        List<ItemEntity> notSoldItems = itemService.getNotSoldItems(user);
+        List<ItemEntity> soldItems = itemService.getSoldItems(user);
 
-        model.addAttribute("items", items);
-        model.addAttribute("userItems", userItems);
-        model.addAttribute("userId", user.getId());
-        model.addAttribute("userRole", user.getRole());
-//        model.addAttribute("userProfit", )
+        List<ItemEntity> searchResults = (keyword != null && !keyword.isEmpty())
+                ? itemService.searchItems(keyword)
+                : null;
+
+        if (searchResults != null) {
+            searchResults.sort((item1, item2) -> {
+                boolean isOwnedByUser1 = item1.getOwner().getId().equals(user.getId());
+                boolean isOwnedByUser2 = item2.getOwner().getId().equals(user.getId());
+
+                if (isOwnedByUser1 != isOwnedByUser2) {
+                    return isOwnedByUser1 ? -1 : 1;
+                }
+
+                boolean isSold1 = item1.isSold();
+                boolean isSold2 = item2.isSold();
+
+                if (isSold1 != isSold2) {
+                    return isSold1 ? 1 : -1;
+                }
+                return 0;
+            });
+        }
+
+        model.addAttribute("user", user);
+        model.addAttribute("notSoldItems", notSoldItems);
+        model.addAttribute("otherItems", otherItems);
+        model.addAttribute("soldItems", soldItems);
+        model.addAttribute("searchResults", searchResults);
+        if (user.getRole().equals("ADMIN"))
+            model.addAttribute("revenue", saleService.getTotalRevenue());
         return "dashboard";
     }
 
@@ -110,28 +148,4 @@ public class MainController {
 
         return "redirect:/dashboard";
     }
-
-    @GetMapping("/protected/admin/revenue")
-    public String revenue(Model model) {
-        model.addAttribute("revenue", saleService.getTotalRevenue());
-
-        return "revenue";
-    }
-
-    @GetMapping("/home")
-    public String home(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
-        UserEntity user = getAuthenticatedUser();
-
-        List<ItemEntity> searchResults = (keyword != null && !keyword.isEmpty())
-                ? itemService.searchItems(keyword)
-                : null;
-
-        List<ItemEntity> otherItems = itemService.getOtherUsersItems(user);
-
-        model.addAttribute("searchResults", searchResults);
-        model.addAttribute("otherItems", otherItems);
-
-        return "home";
-    }
-
 }

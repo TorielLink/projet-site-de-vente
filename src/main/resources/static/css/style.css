@@ -1,90 +1,76 @@
-/* Style global */
+/* style.css */
 body {
     font-family: Arial, sans-serif;
-    background-color: #ecf0f1;
-    color: #333;
+    background: radial-gradient(circle, #ffe5e5 0%, #ffe5e5 0%, #f5a3a3 40%, #b33d3d 70%, #800000 100%);
+    color: #800000;
     margin: 0;
     padding: 0;
-}
-
-/* En-tête commun */
-header {
-    background-color: #2c3e50;
-    color: #fff;
-    padding: 10px 0;
     text-align: center;
-}
-
-h1 {
-    margin: 0;
-}
-
-/* Liens communs */
-a {
-    color: #3498db;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-/* Container pour l'accueil */
-.container {
-    padding: 20px;
-    text-align: center;
-}
-
-/* Formulaire centralisé */
-form {
-    background-color: white;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    margin: auto;
-}
-
-/* Champ de formulaire */
-label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 8px;
-}
-
-input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-/* Bouton */
-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #3498db;
-    border: none;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 4px;
-}
-
-button:hover {
-    background-color: #2980b9;
-}
-
-/* Centrer les formulaires */
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100vh;
 }
 
-form h1 {
-    text-align: center;
-    margin-bottom: 20px;
+
+header {
+    margin: 30px 0;
+}
+
+header h1 {
+    color: #b30000;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+nav {
+    margin-top: 20px;
+}
+
+.link-button {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #d00000;
+    color: white;
+    padding: 10px 20px;
+    margin: 0 10px;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.link-button:hover {
+    background-color: #b30000;
+    box-shadow: 0 0 10px rgba(179, 0, 0, 0.5);
+    transform: scale(1.1);
+}
+
+.link-button.link-outline {
+    background-color: transparent;
+    border: 2px solid #d00000;
+    color: #d00000;
+}
+
+.link-button.link-outline:hover {
+    background-color: #fff5f5;
+    color: #b30000;
+    border-color: #b30000;
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(179, 0, 0, 0.5);
+}
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+
+    .link-button {
+        font-size: 1rem;
+        padding: 8px 15px;
+        margin: 5px 0;
+    }
+
+    nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 }

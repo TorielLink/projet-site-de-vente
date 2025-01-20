@@ -1,6 +1,7 @@
 package clemclo.projet_site_vente.models;
 
 import jakarta.persistence.*;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 

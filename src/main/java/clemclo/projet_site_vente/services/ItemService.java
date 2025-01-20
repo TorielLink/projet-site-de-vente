@@ -34,7 +34,7 @@ public class ItemService {
     }
 
     public List<ItemEntity> getAllItemsByUser(UserEntity user) {
-        return itemRepository.findByOwner(user);
+        return itemRepository.findByOwnerOrderBySold(user);
     }
 
     public List<ItemEntity> getOtherUsersItems(UserEntity user) {
@@ -49,6 +49,14 @@ public class ItemService {
 
     public ItemEntity getItemById(Long id) {
         return itemRepository.findById(id).orElse(null);
+    }
+
+    public List<ItemEntity> getSoldItems(UserEntity user) {
+        return itemRepository.findByOwnerAndSoldTrueOrderByPriceDesc(user);
+    }
+
+    public List<ItemEntity> getNotSoldItems(UserEntity user) {
+        return itemRepository.findByOwnerAndSoldFalseOrderByPriceDesc(user);
     }
 
     public boolean deleteItem(Long id) {
